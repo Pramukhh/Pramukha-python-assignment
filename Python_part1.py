@@ -13,7 +13,7 @@ search_params = {
 
 product_data = []
 
-# Scrape multiple pages
+
 for page in range(1, 21):
     search_params["page"] = page
     response = requests.get(base_url, params=search_params)
@@ -24,20 +24,19 @@ for page in range(1, 21):
     for product in products:
         product_info = {}
 
-        # Extract product URL
+ 
         product_url = product.find("a", class_="a-link-normal s-no-outline")["href"]
         product_info["Product URL"] = "https://www.amazon.in" + product_url
 
-        # Extract product name
         product_name = product.find("span", class_="a-text-normal").get_text()
         product_info["Product Name"] = product_name.strip()
 
-        # Extract product price
+
         product_price = product.find("span", class_="a-offscreen")
         if product_price:
             product_info["Product Price"] = product_price.get_text()
 
-        # Extract rating and number of reviews
+    
         rating = product.find("span", class_="a-icon-alt")
         if rating:
             rating_text = rating.get_text()
